@@ -1,6 +1,6 @@
 import pyrebase
 from PyQt5.QtWidgets import QMainWindow
-
+import sqlite3
 from  Ui_ChooseExecutors import Ui_MainWindow as ChooseExecutors
 executors = [{'executor' : 'ООО «НИИПГАЗА»', 'postal' : '450059, Россия, Республика Башкортостан, г. Уфа, проспект Октября, дом 43/5, офис Б',
                           'cert' : '№ ЛНК-053А0002 от 02.03.2021 г'},
@@ -22,7 +22,14 @@ database = fireBaseApp.database()
 
 class SecondScreen (Ui_MainWindow):
     # Own methods
+    con = sqlite3.connect("users.db")
+    cur = con.cursor()
+    cur.execute("SELECT user FROM USERSTABLE")
+    rows = cur.fetchall()
     executorList = [i["executor"] for i in executors]
     clientList =[i["client"] for i in clients]
+    surNames = [row[0] for row in rows]
     def initEventListeners(self):
         self.comboBox.addItems(self.executorList)
+        self.comboBox_2.addItems(self.clientList)
+        self.comboBox_3.addItems(self.surNames)

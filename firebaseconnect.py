@@ -17,22 +17,22 @@ database = fireBaseApp.database()
 class AuthWindow (Ui_MainWindow):
     # Own methods
     def authorize(self, login):
-        # TODO: Сделать вход по паролю
-        # Переделать чуть код после изменения данных на firebase
-        con = sqlite3.connect("users.db")
-        cur = con.cursor()
-        cur.execute("SELECT user FROM USERSTABLE WHERE user LIKE '" + login + "'")
-        rows = cur.fetchall()
-        print(rows)
-        cur.close()
-        print("check2")
-        if len(rows) > 0:
-            self.label_3.setText("Авторизация прошла успешно!")
-            self.chooseExecutors = QMainWindow()
-            self.chooseExecutorsUi= SecondScreen()
-            self.chooseExecutorsUi.setupUi(self.chooseExecutors)
-            self.chooseExecutorsUi.initEventListeners()
-            self.chooseExecutors.show()
+        # # TODO: Сделать вход по паролю
+        # # Переделать чуть код после изменения данных на firebase
+        # con = sqlite3.connect("users.db")
+        # cur = con.cursor()
+        # cur.execute("SELECT user FROM USERSTABLE WHERE user LIKE '" + login + "'")
+        # rows = cur.fetchall()
+        # print(rows)
+        # cur.close()
+        # print("check2")
+        # if len(rows) > 0:
+        self.label_3.setText("Авторизация прошла успешно!")
+        self.chooseExecutors = QMainWindow()
+        self.chooseExecutorsUi= SecondScreen()
+        self.chooseExecutorsUi.setupUi(self.chooseExecutors)
+        self.chooseExecutorsUi.initEventListeners()
+        self.chooseExecutors.show()
         # else:
         #     self.label_3.setText("Неверный логин, попробуйте снова")
 
