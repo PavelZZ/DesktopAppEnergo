@@ -1,4 +1,5 @@
 import pyrebase
+import json
 from PyQt5.QtWidgets import QMainWindow
 import sqlite3
 from  Ui_ChooseExecutors import Ui_MainWindow as ChooseExecutors
@@ -13,7 +14,6 @@ firebaseconfig = {'apiKey': "AIzaSyDQeQ_YV0ZVeLW--dzDt6XntEwcCEGwTrg",
                   'appId': "1:622369709896:web:5b1121856ffdff3a4e9d7d"}
 fireBaseApp= pyrebase.initialize_app(firebaseconfig)
 database = fireBaseApp.database()
-
 class AuthWindow (Ui_MainWindow):
     # Own methods
     def authorize(self, login):

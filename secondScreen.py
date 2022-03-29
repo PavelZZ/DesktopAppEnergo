@@ -1,6 +1,8 @@
 import pyrebase
 from PyQt5.QtWidgets import QMainWindow
 import sqlite3
+from jsonadd import addToJson
+from thirdscreen import ThirdScreen
 from  Ui_ChooseExecutors import Ui_MainWindow as ChooseExecutors
 executors = [{'executor' : 'ООО «НИИПГАЗА»', 'postal' : '450059, Россия, Республика Башкортостан, г. Уфа, проспект Октября, дом 43/5, офис Б',
                           'cert' : '№ ЛНК-053А0002 от 02.03.2021 г'},
@@ -33,3 +35,10 @@ class SecondScreen (Ui_MainWindow):
         self.comboBox.addItems(self.executorList)
         self.comboBox_2.addItems(self.clientList)
         self.comboBox_3.addItems(self.surNames)
+    def nextScreen(self):
+        jsonString = addToJson({"executor": self.comboBox.currentIndex(),"client": self.comboBox_2.currentIndex(),"FIO": self.comboBox_3.currentIndex()})
+        self.chooseMethods = QMainWindow()
+        self.chooseMethodsUi = ThirdScreen()
+        self.chooseMethodsUi.setupUi(self.chooseMethods)
+        self.chooseMethodsUi.initEventListeners()
+        self.chooseMethods.show()
