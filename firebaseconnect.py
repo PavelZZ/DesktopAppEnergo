@@ -2,7 +2,6 @@ import pyrebase
 import json
 from PyQt5.QtWidgets import QMainWindow
 import sqlite3
-from  Ui_ChooseExecutors import Ui_MainWindow as ChooseExecutors
 from secondScreen import SecondScreen
 from Ui_AuthWindow import Ui_MainWindow
 firebaseconfig = {'apiKey': "AIzaSyDQeQ_YV0ZVeLW--dzDt6XntEwcCEGwTrg",

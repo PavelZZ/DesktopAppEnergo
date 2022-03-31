@@ -1,7 +1,8 @@
 import pyrebase
-from PyQt5.QtWidgets import QMainWindow
-import sqlite3
-from Ui_ControlMethods import Ui_MainWindow as ChooseExecutors
+from Ui_ControlMethods import Ui_MainWindow
+from jsonadd import addToJson
+# Const
+QTY_OF_CHECKBOXES = 6
 
 executors = [{'executor': 'ООО «НИИПГАЗА»',
               'postal': '450059, Россия, Республика Башкортостан, г. Уфа, проспект Октября, дом 43/5, офис Б',
@@ -12,7 +13,8 @@ executors = [{'executor': 'ООО «НИИПГАЗА»',
 clients = [{'client': 'ООО «Газпром трансгаз Казань»',
             'postal': '450059, Россия, Республика Башкортостан, г. Уфа, проспект Октября, дом 43/5, офис Б'},
            {'client': 'ООО «Газпром трансгаз Югорск»', 'postal': '628260, РФ, г. Югорск, ул. Мира, 15'}]
-from Ui_ChooseExecutors import Ui_MainWindow
+
+devices= ["Фильтр высокого давления, инв. № 136033","Пылеуловитель, инв. № 135783"]
 
 firebaseconfig = {'apiKey': "AIzaSyDQeQ_YV0ZVeLW--dzDt6XntEwcCEGwTrg",
                   'authDomain': "energotemp-9b8c9.firebaseapp.com",
@@ -24,10 +26,23 @@ firebaseconfig = {'apiKey': "AIzaSyDQeQ_YV0ZVeLW--dzDt6XntEwcCEGwTrg",
 
 fireBaseApp = pyrebase.initialize_app(firebaseconfig)
 database = fireBaseApp.database()
-
+file = open("JSONstring.txt","w")
 
 class ThirdScreen(Ui_MainWindow):
     # Own methods
-
+    val = []
     def initEventListeners(self):
+        self.comboBox.addItems(devices)
+        self.dateEdit.date()
+    def getState(self):
+        for i in range(QTY_OF_CHECKBOXES):
+            chked = False
+            exec(f"chked = self.checkBox_{i + 1}.isChecked()")
+            if (chked):
+                self.val.append(i)
+        # Чекбоксы в json
+        jsonString = addToJson({"methods": self.val})
+        self.comboBoxValue = self.comboBox.currentIndex()
+        jsonString += addToJson({"device: " + self.comboBoxValue})
+
 

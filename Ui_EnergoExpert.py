@@ -24,23 +24,19 @@ class Ui_MainWindow(object):
         self.gridLayout = QtWidgets.QGridLayout()
         self.gridLayout.setObjectName("gridLayout")
         self.pushButton1 = QtWidgets.QPushButton(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Maximum)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.pushButton1.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.pushButton1.sizePolicy().hasHeightForWidth())
         self.pushButton1.setSizePolicy(sizePolicy)
         self.pushButton1.setMaximumSize(QtCore.QSize(16777215, 200))
         self.pushButton1.setObjectName("pushButton1")
         self.gridLayout.addWidget(self.pushButton1, 0, 1, 1, 1)
         self.plainTextEdit = QtWidgets.QPlainTextEdit(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.plainTextEdit.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.plainTextEdit.sizePolicy().hasHeightForWidth())
         self.plainTextEdit.setSizePolicy(sizePolicy)
         self.plainTextEdit.setObjectName("plainTextEdit")
         self.gridLayout.addWidget(self.plainTextEdit, 0, 0, 1, 1)
@@ -48,12 +44,10 @@ class Ui_MainWindow(object):
         self.pushButton3.setObjectName("pushButton3")
         self.gridLayout.addWidget(self.pushButton3, 1, 0, 1, 1)
         self.pushButton2 = QtWidgets.QPushButton(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.pushButton2.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.pushButton2.sizePolicy().hasHeightForWidth())
         self.pushButton2.setSizePolicy(sizePolicy)
         self.pushButton2.setObjectName("pushButton2")
         self.gridLayout.addWidget(self.pushButton2, 1, 1, 1, 1)
@@ -69,18 +63,6 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-        self.addFunctions()
-
-    def addFunctions(self):
-        self.pushButton1.clicked.connect(
-            lambda: self.setNumbers(self.pushButton1.text()))
-        self.pushButton2.clicked.connect(self.deleteNumbers)
-
-    def setNumbers(self, string):
-        self.plainTextEdit.insertPlainText(string)
-
-    def deleteNumbers(self):
-        self.plainTextEdit.clear()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate

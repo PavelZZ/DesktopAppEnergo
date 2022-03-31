@@ -3,7 +3,6 @@ from PyQt5.QtWidgets import QMainWindow
 import sqlite3
 from jsonadd import addToJson
 from thirdscreen import ThirdScreen
-from  Ui_ChooseExecutors import Ui_MainWindow as ChooseExecutors
 executors = [{'executor' : 'ООО «НИИПГАЗА»', 'postal' : '450059, Россия, Республика Башкортостан, г. Уфа, проспект Октября, дом 43/5, офис Б',
                           'cert' : '№ ЛНК-053А0002 от 02.03.2021 г'},
         {'executor' : 'ООО «Энергоэксперт»', 'postal' : '197342, г. Санкт-Петербург, наб. Черной речки, д.41, к.2, лит. Б, пом.7',
@@ -21,7 +20,7 @@ firebaseconfig = {'apiKey': "AIzaSyDQeQ_YV0ZVeLW--dzDt6XntEwcCEGwTrg",
 
 fireBaseApp= pyrebase.initialize_app(firebaseconfig)
 database = fireBaseApp.database()
-
+file = open("JSONstring.txt","w")
 class SecondScreen (Ui_MainWindow):
     # Own methods
     con = sqlite3.connect("users.db")
@@ -35,8 +34,10 @@ class SecondScreen (Ui_MainWindow):
         self.comboBox.addItems(self.executorList)
         self.comboBox_2.addItems(self.clientList)
         self.comboBox_3.addItems(self.surNames)
+        self.pushButton_continue.clicked.connect(self.nextScreen)
     def nextScreen(self):
         jsonString = addToJson({"executor": self.comboBox.currentIndex(),"client": self.comboBox_2.currentIndex(),"FIO": self.comboBox_3.currentIndex()})
+        file.write(jsonString)
         self.chooseMethods = QMainWindow()
         self.chooseMethodsUi = ThirdScreen()
         self.chooseMethodsUi.setupUi(self.chooseMethods)
