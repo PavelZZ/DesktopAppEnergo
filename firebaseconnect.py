@@ -47,7 +47,6 @@ class AuthWindow (Ui_MainWindow):
     def updateDB(self,event):
         con = sqlite3.connect("users.db")
         cur = con.cursor()
-        print("check")
         allUsers = database.child("users").get()
         print(allUsers)
         # Временно

@@ -1,8 +1,11 @@
+import datetime
+
 import pyrebase
 from Ui_ControlMethods import Ui_MainWindow
 from jsonadd import addToJson
+import secondScreen
 # Const
-QTY_OF_CHECKBOXES = 6
+QTY_OF_CHECKBOXES = 7
 
 executors = [{'executor': 'ООО «НИИПГАЗА»',
               'postal': '450059, Россия, Республика Башкортостан, г. Уфа, проспект Октября, дом 43/5, офис Б',
@@ -33,16 +36,22 @@ class ThirdScreen(Ui_MainWindow):
     val = []
     def initEventListeners(self):
         self.comboBox.addItems(devices)
-        self.dateEdit.date()
+        self.dateEdit.setDate(datetime.datetime.now())
+        self.pushButton.clicked.connect(self.getState)
     def getState(self):
-        for i in range(QTY_OF_CHECKBOXES):
-            chked = False
-            exec(f"chked = self.checkBox_{i + 1}.isChecked()")
-            if (chked):
+        checkBoxes = [self.checkBox_1,self.checkBox_2,self.checkBox_3,self.checkBox_4,self.checkBox_5,self.checkBox_6,self.checkBox_7]
+        for i, item in enumerate(checkBoxes):
+            if (item.isChecked()):
+                print(i)
                 self.val.append(i)
-        # Чекбоксы в json
-        jsonString = addToJson({"methods": self.val})
+        # Combobox в json
+        secondScreen.jsonstring["methods"] = self.val
         self.comboBoxValue = self.comboBox.currentIndex()
-        jsonString += addToJson({"device: " + self.comboBoxValue})
-
+        secondScreen.jsonstring["device"] = self.comboBoxValue
+        secondScreen.jsonstring["date"] = self.dateEdit.date().toPyDate().strftime("%d.%m.%Y")
+        print(secondScreen.jsonstring)
+        resultJson = addToJson(secondScreen.jsonstring)
+        database.child("protocols").child("1").set(resultJson)
+        file.write(resultJson)
+        file.close()
 
