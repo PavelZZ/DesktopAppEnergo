@@ -29,7 +29,6 @@ firebaseconfig = {'apiKey': "AIzaSyDQeQ_YV0ZVeLW--dzDt6XntEwcCEGwTrg",
 
 fireBaseApp = pyrebase.initialize_app(firebaseconfig)
 database = fireBaseApp.database()
-file = open("JSONstring.txt","w")
 
 class ThirdScreen(Ui_MainWindow):
     # Own methods
@@ -50,8 +49,8 @@ class ThirdScreen(Ui_MainWindow):
         secondScreen.jsonstring["device"] = self.comboBoxValue
         secondScreen.jsonstring["date"] = self.dateEdit.date().toPyDate().strftime("%d.%m.%Y")
         print(secondScreen.jsonstring)
+        file = open("JSONstring.txt", "w")
         resultJson = addToJson(secondScreen.jsonstring)
-        database.child("protocols").child("1").set(resultJson)
         file.write(resultJson)
         file.close()
 

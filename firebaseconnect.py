@@ -3,6 +3,7 @@ import json
 from PyQt5.QtWidgets import QMainWindow
 import sqlite3
 from secondScreen import SecondScreen
+from PostAuthorizeScreen import PostAuthorizeScreen
 from Ui_AuthWindow import Ui_MainWindow
 firebaseconfig = {'apiKey': "AIzaSyDQeQ_YV0ZVeLW--dzDt6XntEwcCEGwTrg",
                   'authDomain': "energotemp-9b8c9.firebaseapp.com",
@@ -27,11 +28,12 @@ class AuthWindow (Ui_MainWindow):
         # print("check2")
         # if len(rows) > 0:
         self.label_3.setText("Авторизация прошла успешно!")
-        self.chooseExecutors = QMainWindow()
-        self.chooseExecutorsUi= SecondScreen()
-        self.chooseExecutorsUi.setupUi(self.chooseExecutors)
-        self.chooseExecutorsUi.initEventListeners()
-        self.chooseExecutors.show()
+        self.postAuthorize= QMainWindow()
+        self.postAuthorizeUi = PostAuthorizeScreen()
+        self.postAuthorizeUi.setupUi(self.postAuthorize)
+        self.postAuthorizeUi.initEventListeners()
+        self.postAuthorize.show()
+        return
         # else:
         #     self.label_3.setText("Неверный логин, попробуйте снова")
 
@@ -40,6 +42,7 @@ class AuthWindow (Ui_MainWindow):
             lambda: self.authorize(self.lineEdit.text()))
         self.lineEdit.textChanged.connect(self.clearAuthStatusLabel)
         self.update_btn.mousePressEvent = self.updateDB
+        return
 
     def clearAuthStatusLabel(self):
         self.label_3.clear()
