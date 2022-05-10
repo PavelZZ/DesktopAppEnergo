@@ -1,6 +1,9 @@
 import datetime
 
 import pyrebase
+from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import QMessageBox, QMainWindow
+
 from Ui_ControlMethods import Ui_MainWindow
 from jsonadd import addToJson
 import secondScreen
@@ -52,5 +55,31 @@ class ThirdScreen(Ui_MainWindow):
         file = open("JSONstring.txt", "w")
         resultJson = addToJson(secondScreen.jsonstring)
         file.write(resultJson)
-        file.close()
+        if "date" in resultJson:
+            messageBox = QMessageBox()
+            messageBox.setIcon(QMessageBox.Information)
+            messageBox.setWindowTitle("Отправка файла")
+            messageBox.setText("Данные сохранены")
+            messageBox.setStandardButtons(QMessageBox.Ok)
+            messageBox.exec_()
+            messageBoxsendReport = QMessageBox()
+            messageBoxsendReport.setIcon(QMessageBox.Information)
+            messageBoxsendReport.setWindowTitle("Отправка файла")
+            messageBoxsendReport.setText("Отправить отчет сейчас?")
+            messageBoxsendReport.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+            returnValue = messageBoxsendReport.exec_()
+            if returnValue == QMessageBox.Ok:
+                messageBox = QMessageBox()
+                icon = QIcon("imgs/checked.png")
+                messageBox.setIconPixmap(icon.pixmap(60, 60))
+                messageBox.setWindowTitle("Отправка файла")
+                messageBox.setText("Протокол успешно отправлен на сервер")
+                messageBox.setStandardButtons(QMessageBox.Ok)
+                messageBox.exec_()
+                database.child("protocols").child("1").set(resultJson)
+            exit()
+
+    def sendReport(self,info):
+        print("test")
+
 

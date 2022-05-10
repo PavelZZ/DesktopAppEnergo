@@ -46,9 +46,9 @@ class PostAuthorizeScreen(Ui_MainWindow):
         except Exception:
             print("first")
             messageBox = QMessageBox()
-            messageBox.setIcon(QMessageBox.Critical)
+            messageBox.setIcon(QMessageBox.Warning)
             messageBox.setWindowTitle("Отправка файла")
-            messageBox.setText("Пустые данные, нечего отправлять")
+            messageBox.setText("Заполните новый отчет, т.к. файл либо пустой либо удален")
             messageBox.setStandardButtons(QMessageBox.Ok)
             messageBox.exec_()
             return
@@ -68,6 +68,7 @@ class PostAuthorizeScreen(Ui_MainWindow):
 
     def sendReport(self,file):
         try:
+            # Отправка протокола
             database.child("protocols").child("1").set(file)
             messageBox = QMessageBox()
             icon = QIcon("imgs/checked.png")
