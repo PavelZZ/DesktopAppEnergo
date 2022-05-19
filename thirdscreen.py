@@ -1,9 +1,11 @@
 import datetime
+import sys
 
 import pyrebase
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QMessageBox, QMainWindow
+from PyQt5.QtWidgets import QMessageBox, QMainWindow, QApplication
 
+import ReportGenerate
 from Ui_ControlMethods import Ui_MainWindow
 from jsonadd import addToJson
 import secondScreen
@@ -77,8 +79,11 @@ class ThirdScreen(Ui_MainWindow):
                 messageBox.setStandardButtons(QMessageBox.Ok)
                 messageBox.exec_()
                 database.child("protocols").child("1").set(resultJson)
-            exit()
-
+            self.chooseMethods = QMainWindow()
+            self.chooseMethodsUi = ReportGenerate.ReportGenerate()
+            self.chooseMethodsUi.setupUi(self.chooseMethods)
+            self.chooseMethodsUi.initEventListeners()
+            self.chooseMethods.show()
     def sendReport(self,info):
         print("test")
 

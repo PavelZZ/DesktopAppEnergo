@@ -3,7 +3,7 @@ import time
 import pyrebase
 from PyQt5.QtGui import QIcon
 
-from PyQt5.QtWidgets import QMainWindow, QListWidgetItem, QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QListWidgetItem, QMessageBox, QFileDialog
 
 import threading
 
@@ -29,6 +29,7 @@ firebaseconfig = {'apiKey': "AIzaSyDQeQ_YV0ZVeLW--dzDt6XntEwcCEGwTrg",
 fireBaseApp= pyrebase.initialize_app(firebaseconfig)
 database = fireBaseApp.database()
 class ReportGenerate(QtCore.QObject, Ui_MainWindow):
+    fileName = str()
     finished = QtCore.pyqtSignal()
     def initEventListeners(self):
         sp_retain = self.progressBar.sizePolicy()
@@ -41,14 +42,16 @@ class ReportGenerate(QtCore.QObject, Ui_MainWindow):
         self.finished.connect(self.on_finished)
 
     def on_finished(self):
-        messageBox = QMessageBox()
-        icon = QIcon("imgs/checked.png")
-        messageBox.setIconPixmap(icon.pixmap(60, 60))
-        messageBox.setWindowTitle("Создание отчета")
-        messageBox.setText("Отчет успешно создан!")
-        messageBox.setStandardButtons(QMessageBox.Ok)
-        messageBox.exec_()
-        self.progressBar.setVisible(False)
+        print("huyna")
+        print(self.fileName)
+        # messageBox = QMessageBox()
+        # icon = QIcon("imgs/checked.png")
+        # messageBox.setIconPixmap(icon.pixmap(60, 60))
+        # messageBox.setWindowTitle("Создание отчета")
+        # messageBox.setText("Отчет успешно создан!")
+        # messageBox.setStandardButtons(QMessageBox.Ok)
+        # messageBox.exec_()
+        # self.progressBar.setVisible(False)
     def onClickHandlerGetListsOfReports(self):
        if threading.active_count() == 1:   # Если запущен только первичный поток, то запускаем еще один для получения данных
            self.pushButton.setEnabled(False)
@@ -56,6 +59,7 @@ class ReportGenerate(QtCore.QObject, Ui_MainWindow):
     def onClickHandlerGenerateReport(self):
         if threading.active_count() == 1:
             self.pushButton_2.setEnabled(False)
+            self.fileName = QFileDialog.getSaveFileName(None, "Сохранить протокол", "temp/", "*.docx \n *.doc", "Protocol.docx")[0]
             self.generateReportThread = threading.Thread(target=self.generateReport,daemon=True)
             self.generateReportThread.start()
     def getListOfReports(self):
@@ -77,7 +81,7 @@ class ReportGenerate(QtCore.QObject, Ui_MainWindow):
         docBuilderInstance.percentage = 1
         self.progressBar.setVisible(True)
         child = str(self.listWidget.indexFromItem(self.listWidget.currentItem()).row())
-        docBuilderInstance.build_reports(child)
+        docBuilderInstance.build_reports(child,self.fileName)
         self.pushButton_2.setEnabled(True)
         self.finished.emit()
 

@@ -1,4 +1,6 @@
 import sys
+import time
+
 import pyrebase
 from PyQt5.QtWidgets import QApplication, QMainWindow
 import firebaseconnect as pd
@@ -10,7 +12,7 @@ import Ui_EnergoExpert
 app = QApplication(sys.argv)
 
 MainWindow = QMainWindow()
-ui = ReportGenerate.ReportGenerate()
+ui = firebaseconnect.AuthWindow()
 ui.setupUi(MainWindow)
 # Подписаться на события
 ui.initEventListeners()

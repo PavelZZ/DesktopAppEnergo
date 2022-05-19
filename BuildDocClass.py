@@ -1,8 +1,8 @@
 import json
 import time
 import math
-
 from PyQt5 import QtCore
+from PyQt5.QtWidgets  import QFileDialog, QWidget
 from docxtpl import DocxTemplate
 from docxcompose.composer import Composer
 from docx import Document
@@ -104,7 +104,7 @@ class BuildDoc(QtCore.QObject):
         doc.save(file_name + '.docx')
         self.files_list.append(file_name + '.docx')
 
-    def mergeDoc(self):
+    def mergeDoc(self,fileName):
         self.percentage = 50
         master = Document(self.files_list[0])
         composer = Composer(master)
@@ -116,11 +116,8 @@ class BuildDoc(QtCore.QObject):
             if i < len(self.files_list) - 1: appendedDoc.add_page_break()
             composer.append(appendedDoc)
             self.percentage += progress_step
-            print("Процент", self.percentage)
-            time.sleep(0.5)
-        composer.save("Protocol.docx")
+        composer.save(fileName)
         self.percentage = 100
-
     def method_equals(self,method, other):
         return True
 
@@ -133,7 +130,7 @@ class BuildDoc(QtCore.QObject):
                             'c3': df.iloc[i][9].strftime('%d.%m.%Y')})
         return res
 
-    def build_reports(self,childToChoose):
+    def build_reports(self,childToChoose,fileName):
 
         # Выполнение кода до вызова mergeDoc() - это 50% progressBar
         json_string = json.loads(db.child('protocols').child(childToChoose).get().val())
@@ -154,4 +151,4 @@ class BuildDoc(QtCore.QObject):
             context['surname_and_initials'] = name[1][0] + '.' + name[2][0] + '. ' + name[0]
             self.buildDoc(context, method)
             self.percentage += progress_step
-        self.mergeDoc()
+        self.mergeDoc(fileName)

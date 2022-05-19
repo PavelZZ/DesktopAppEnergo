@@ -38,7 +38,7 @@ class PostAuthorizeScreen(Ui_MainWindow):
     def initEventListeners(self):
         print("zero")
         self.newReport.clicked.connect(self.generateNewReport)
-        file = open("JSONstring.txt")
+        file = open("JSONstring.txt", "w+")
         fileContent = file.read()
         fileJson=dict()
         try:

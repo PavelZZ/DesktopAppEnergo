@@ -24,6 +24,7 @@ class SecondScreen (Ui_MainWindow):
     # Own methods
     con = sqlite3.connect("users.db")
     cur = con.cursor()
+    cur.execute("CREATE TABLE if not exists USERSTABLE (id INTEGER PRIMARY KEY , user TEXT, password TEXT);")
     cur.execute("SELECT user FROM USERSTABLE")
     rows = cur.fetchall()
     executorList = [i["executor"] for i in executors]
